@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :offset="6" :span="12">
-        <el-input v-model="username" autofocus>
+        <el-input v-model="username" autofocus clearable>
           <template slot="prepend">账 号</template>
         </el-input>
       </el-col>
@@ -10,15 +10,22 @@
 
     <el-row>
       <el-col :offset="6" :span="12">
-        <el-input v-model="password" autofocus>
+        <el-input type="password" v-model="password" clearable show-password>
           <template slot="prepend">密 码</template>
         </el-input>
+      </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col :offset="6" :span="12">
+        <el-button size="medium" @click="Login">登录</el-button>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import Mock from '../../mock/login'
 export default {
   name: "Login",
   components: {},
@@ -27,6 +34,21 @@ export default {
       username: "",
       password: ""
     };
+  },
+  methods: {
+    async Login() {
+      try {
+        let params = {
+          username: "admin"
+        };
+        // let res = await window.axios.post("/Wechat/Login", params);
+        let res = await Mock.mock("/Wechat/Login", params);
+        console.log("res:", res);
+        this.$router.push("/Home");
+      } catch (error) {
+        console.log("error:", error);
+      }
+    }
   }
 };
 </script>
