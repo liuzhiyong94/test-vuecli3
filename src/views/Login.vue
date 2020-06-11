@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import Mock from '../../mock/login'
+require ("../mock/login.js")
 export default {
   name: "Login",
   components: {},
@@ -41,10 +41,9 @@ export default {
         let params = {
           username: "admin"
         };
-        // let res = await window.axios.post("/Wechat/Login", params);
-        let res = await Mock.mock("/Wechat/Login", params);
+        let res = await window.axios.post("/api/Wechat/Login", params);
         console.log("res:", res);
-        this.$router.push("/Home");
+        // this.$router.push("/Home");
       } catch (error) {
         console.log("error:", error);
       }
