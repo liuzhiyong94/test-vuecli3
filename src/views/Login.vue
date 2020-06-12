@@ -25,7 +25,7 @@
 </template>
 
 <script>
-require ("../mock/login.js")
+require("../mock/login.js");
 export default {
   name: "Login",
   components: {},
@@ -42,10 +42,24 @@ export default {
           username: "admin"
         };
         let res = await window.axios.post("/api/Wechat/Login", params);
-        console.log("res:", res);
-        // this.$router.push("/Home");
+        if (res.code == 200) {
+          sessionStorage.setItem("token", res.data);
+          this.$message({
+            message: "登录成功",
+            type: "success"
+          });
+          this.$router.push("/home");
+        } else {
+          this.$message({
+            message: res.msg,
+            type: "warning"
+          });
+        }
       } catch (error) {
-        console.log("error:", error);
+        this.$message({
+          message: error,
+          type: "warning"
+        });
       }
     }
   }

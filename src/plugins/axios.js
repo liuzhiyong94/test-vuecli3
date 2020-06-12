@@ -15,7 +15,7 @@ let config = {
   timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
   headers: {
-    Authorization: "Bearer " + sessionStorage.getItem("secretKey")
+    Authorization: "Bearer " + sessionStorage.getItem("token")
   }
 };
 
