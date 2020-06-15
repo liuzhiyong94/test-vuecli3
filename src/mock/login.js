@@ -27,7 +27,7 @@ const JwtToken = Jwt.sign({
 const data = {
     "code": 200,
     "msg": "",
-    "data": JwtToken
+    "data": { "userinfo": mockData, "JwtToken": JwtToken }
 }
 
 Mock.mock('/api/Wechat/Login', 'post', data)

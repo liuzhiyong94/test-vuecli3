@@ -43,7 +43,11 @@ export default {
         };
         let res = await window.axios.post("/api/Wechat/Login", params);
         if (res.code == 200) {
-          sessionStorage.setItem("token", res.data);
+          sessionStorage.setItem("JwtToken", res.data.JwtToken);
+          sessionStorage.setItem(
+            "UserInfo",
+            this.compileStr(JSON.stringify(res.data.userinfo))
+          );
           this.$message({
             message: "登录成功",
             type: "success"

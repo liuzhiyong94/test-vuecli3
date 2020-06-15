@@ -40,8 +40,8 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const token = sessionStorage.getItem('token');
-  if (!token && to.path !== '/login') {
+  const JwtToken = sessionStorage.getItem('JwtToken');
+  if (!JwtToken && to.path !== '/login') {
     next('/login');
   }
   else if (to.path == '/404') {

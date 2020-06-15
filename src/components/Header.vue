@@ -1,9 +1,17 @@
 <template>
-  <div class="header">
-    <el-header>
-      <el-image class="logo" :src="src"></el-image>
-    </el-header>
-  </div>
+  <el-header class="header">
+    <el-image class="logo" :src="src"></el-image>
+    <el-dropdown class="userinfo">
+      <span class="el-dropdown-link">
+        {{realname}}
+        <i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item>修改密码</el-dropdown-item>
+        <el-dropdown-item @click.native="SignOut">退出登录</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+  </el-header>
 </template>
 
 <script>
@@ -12,21 +20,41 @@ export default {
   components: {},
   data() {
     return {
-      src: require("../assets/logo.png")
+      src: require("../assets/logo.png"),
+      realname: ""
     };
   },
-  methods: {}
+  created() {
+    this.realname = JSON.parse(
+      this.uncompileStr(sessionStorage.getItem("UserInfo"))
+    ).realname;
+  },
+  methods: {
+    SignOut() {
+      sessionStorage.setItem("JwtToken", "");
+      sessionStorage.setItem("UserInfo", "");
+      location.reload();
+    }
+  }
 };
 </script>
-
-<style lang="scss">
+<style lang="scss" scoped>
 .header {
-  background: blanchedalmond;
-  height: 80px;
+  width: 100%;
+  background: $header-background-color;
+  height: $header-height !important;
   .logo {
     float: left;
-    width: 80px;
-    height: 80px;
+    width: $header-height;
+    height: $header-height;
   }
+}
+.userinfo {
+  cursor: default;
+  float: right;
+  margin-top: 25px;
+}
+.el-dropdown-link {
+  font-size: 16px;
 }
 </style>
