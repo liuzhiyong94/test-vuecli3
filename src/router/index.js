@@ -3,6 +3,12 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+// 解决ElementUI导航栏中的vue-router在3.0版本以上重复点菜单报错问题
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 const routes = [
   {
     path: '/',
@@ -24,12 +30,28 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: () => import('../views/Home.vue')
+    component: () => import('../views/Home.vue'),
+    children: [
+      {
+        path: '/',
+        name: 'Welcome',
+        component: () => import('../views/Welcome.vue'),
+      },
+      {
+        path: '/404',
+        name: '404',
+        component: () => import('../views/404.vue')
+      },
+      {
+        path: '*',
+        name: '404',
+        component: () => import('../views/404.vue')
+      }
+    ]
   },
   {
     path: '*',
-    name: '404',
-    component: () => import('../views/404.vue')
+    redirect: '/404'
   }
 ]
 

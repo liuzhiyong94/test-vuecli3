@@ -4,11 +4,11 @@
 
 <script>
 export default {
-  name: "notfound",
+  name: "Welcome",
   components: {},
   data() {
     return {
-      src: require("../assets/404.jpg")
+      src: require("../assets/welcome.jpg")
     };
   },
   methods: {}

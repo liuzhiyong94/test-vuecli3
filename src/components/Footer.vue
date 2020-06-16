@@ -18,9 +18,6 @@ export default {
   background-color: $footer-background-color;
   width: 100%;
   height: $footer-height !important;
-  position: absolute;
-  bottom: 0;
-  left: 0;
 }
 </style>
 
