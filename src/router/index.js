@@ -38,6 +38,11 @@ const routes = [
         component: () => import('../views/Welcome.vue'),
       },
       {
+        path: '/location',
+        name: 'Location',
+        component: () => import('../views/Location/Location.vue')
+      },
+      {
         path: '/404',
         name: '404',
         component: () => import('../views/404.vue')

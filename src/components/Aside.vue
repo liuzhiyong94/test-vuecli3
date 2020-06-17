@@ -70,6 +70,10 @@ export default {
 .aside {
   width: 200px !important;
   overflow-y: auto;
+  border: 1px solid #ddd;
+}
+.el-menu {
+  border: 0 !important;
 }
 </style>
 
