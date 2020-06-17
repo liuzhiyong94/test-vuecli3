@@ -17,40 +17,50 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/Login.vue')
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import('../views/Login.vue'),
+    meta: {
+      title: "登录"
+    }
   },
   {
     path: '/home',
     name: 'home',
     component: () => import('../views/Home.vue'),
+    meta: {
+      title: "首页"
+    },
     children: [
       {
         path: '/',
         name: 'Welcome',
         component: () => import('../views/Welcome.vue'),
+        meta: {
+          title: "欢迎"
+        }
       },
       {
         path: '/location',
         name: 'Location',
-        component: () => import('../views/Location/Location.vue')
+        component: () => import('../views/Location/Location.vue'),
+        meta: {
+          title: "位置管理"
+        }
       },
       {
         path: '/404',
         name: '404',
-        component: () => import('../views/404.vue')
+        component: () => import('../views/404.vue'),
+        meta: {
+          title: "404"
+        }
       },
       {
         path: '*',
         name: '404',
-        component: () => import('../views/404.vue')
+        component: () => import('../views/404.vue'),
+        meta: {
+          title: "404"
+        }
       }
     ]
   },
@@ -67,6 +77,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
   const JwtToken = sessionStorage.getItem('JwtToken');
   if (!JwtToken && to.path !== '/login') {
     next('/login');

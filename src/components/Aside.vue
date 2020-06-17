@@ -38,24 +38,24 @@ export default {
     return {
       items: [
         {
-          index: "User",
+          index: "user",
           icon: "el-icon-s-custom",
           title: "人员管理",
           subs: [
             {
-              index: "YF",
+              index: "yf",
               icon: "el-icon-user",
               title: "研发部"
             },
             {
-              index: "CP",
+              index: "cp",
               icon: "el-icon-user",
               title: "产品部"
             }
           ]
         },
         {
-          index: "Location",
+          index: "location",
           icon: "el-icon-location",
           title: "位置管理"
         }
@@ -70,6 +70,7 @@ export default {
 .aside {
   width: 200px !important;
   overflow-y: auto;
+  overflow-x: hidden;
   border: 1px solid #ddd;
 }
 .el-menu {
