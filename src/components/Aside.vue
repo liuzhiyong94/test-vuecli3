@@ -1,7 +1,7 @@
 <template>
   <el-aside class="aside">
     <el-menu router>
-      <template v-for="item in items">
+      <template v-for="item in filters">
         <template v-if="item.subs">
           <el-submenu :index="item.index" :key="item.index">
             <template slot="title">
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import Util from "../plugins/util";
 export default {
   name: "Aside",
   components: {},
@@ -41,29 +42,60 @@ export default {
           index: "user",
           icon: "el-icon-s-custom",
           title: "人员管理",
+          roles: ["*"],
           subs: [
             {
               index: "yf",
               icon: "el-icon-user",
-              title: "研发部"
+              title: "研发部",
+              roles: ["1"]
             },
             {
               index: "cp",
               icon: "el-icon-user",
-              title: "产品部"
+              title: "产品部",
+              roles: ["2"]
             }
           ]
         },
         {
           index: "location",
           icon: "el-icon-location",
-          title: "位置管理"
+          title: "位置管理",
+          roles: ["*"]
         }
-      ]
+      ],
+      role: ""
     };
   },
-  created() {},
-  methods: {}
+  created() {
+    let role = JSON.parse(
+      Util.uncompileStr(sessionStorage.getItem("UserInfo"))
+    ).role.toString();
+    this.role = role;
+  },
+  methods: {
+    filterMenu(arr) {
+      return arr
+        .filter(item => {
+          return (
+            item.roles.indexOf("*") >= 0 || item.roles.indexOf(this.role) >= 0
+          );
+        })
+        .map(item => {
+          item = Object.assign({}, item);
+          if (item.subs) {
+            item.subs = this.filterMenu(item.subs);
+          }
+          return item;
+        });
+    }
+  },
+  computed: {
+    filters() {
+      return this.filterMenu(this.items);
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

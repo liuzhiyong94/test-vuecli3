@@ -14,7 +14,8 @@ const mockData = {
     "username": "@first",
     "realname": "@cname",
     "mobile": "@phone",
-    "no|0-100": 0
+    "no|0-100": 0,
+    "role": 1
 }
 
 const JwtToken = Jwt.sign({

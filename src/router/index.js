@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Util from "../plugins/util"
 
 Vue.use(VueRouter)
 
@@ -19,7 +20,8 @@ const routes = [
     name: 'login',
     component: () => import('../views/Login.vue'),
     meta: {
-      title: "登录"
+      title: "登录",
+      roles: ["*"]
     }
   },
   {
@@ -27,7 +29,8 @@ const routes = [
     name: 'home',
     component: () => import('../views/Home.vue'),
     meta: {
-      title: "首页"
+      title: "首页",
+      roles: ["*"]
     },
     children: [
       {
@@ -35,7 +38,8 @@ const routes = [
         name: 'Welcome',
         component: () => import('../views/Welcome.vue'),
         meta: {
-          title: "欢迎"
+          title: "欢迎",
+          roles: ["*"]
         }
       },
       {
@@ -43,7 +47,8 @@ const routes = [
         name: 'Location',
         component: () => import('../views/Location/Location.vue'),
         meta: {
-          title: "位置管理"
+          title: "位置管理",
+          roles: ["*"]
         }
       },
       {
@@ -51,7 +56,8 @@ const routes = [
         name: '404',
         component: () => import('../views/404.vue'),
         meta: {
-          title: "404"
+          title: "404",
+          roles: ["*"]
         }
       },
       {
@@ -59,7 +65,8 @@ const routes = [
         name: '404',
         component: () => import('../views/404.vue'),
         meta: {
-          title: "404"
+          title: "404",
+          roles: ["*"]
         }
       }
     ]
@@ -88,7 +95,19 @@ router.beforeEach((to, from, next) => {
     next();
   }
   else {
-    next();
+    // 权限管理
+    if (to.meta.roles.indexOf("*") >= 0) {
+      next();
+    }
+    else if (to.meta.roles.indexOf(JSON.parse(
+      Util.uncompileStr(sessionStorage.getItem("UserInfo"))
+    ).role) >= 0) {
+      next();
+    }
+    else {
+      next("/404");
+    }
+    // next();
   }
 })
 
