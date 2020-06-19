@@ -1,6 +1,6 @@
 <template>
-  <el-aside class="aside">
-    <el-menu router>
+  <div class="sidebar">
+    <el-menu router :collapse="isCollapse" class="elmenu">
       <template v-for="item in filters">
         <template v-if="item.subs">
           <el-submenu :index="item.index" :key="item.index">
@@ -26,8 +26,16 @@
           </el-menu-item>
         </template>
       </template>
+      <!-- 折叠面板 -->
+      <template>
+        <el-menu-item class="collapse" @click="Collapse">
+          <i class="el-icon-d-arrow-left" v-show="!isCollapse"></i>
+          <i class="el-icon-d-arrow-right" v-show="isCollapse"></i>
+          <span>Collapse sidebar</span>
+        </el-menu-item>
+      </template>
     </el-menu>
-  </el-aside>
+  </div>
 </template>
 
 <script>
@@ -65,7 +73,9 @@ export default {
           roles: ["*"]
         }
       ],
-      role: ""
+      role: "",
+      isCollapse: false,
+      sidebarWidth: "240px"
     };
   },
   created() {
@@ -73,6 +83,9 @@ export default {
       Util.uncompileStr(sessionStorage.getItem("UserInfo"))
     ).role.toString();
     this.role = role;
+  },
+  mounted() {
+    document.querySelector(".sidebar").style.width = this.sidebarWidth;
   },
   methods: {
     filterMenu(arr) {
@@ -89,6 +102,28 @@ export default {
           }
           return item;
         });
+    },
+    Collapse() {
+      this.isCollapse = !this.isCollapse;
+      let el_submenu = document.querySelectorAll(".el-submenu span");
+      let el_menu_item = document.querySelectorAll(".el-menu-item span");
+      let el_submenu__icon_arrow = document.querySelectorAll(
+        ".el-submenu__icon-arrow"
+      );
+      if (this.isCollapse) {
+        for (let i = 0; i < el_submenu.length; i++) {
+          el_submenu[i].style.display = "none";
+        }
+        for (let i = 0; i < el_menu_item.length; i++) {
+          el_menu_item[i].style.display = "none";
+        }
+        for (let i = 0; i < el_submenu__icon_arrow.length; i++) {
+          el_submenu__icon_arrow[i].style.display = "none";
+        }
+        document.querySelector(".sidebar").style.width = 64 + "px";
+      } else {
+        document.querySelector(".sidebar").style.width = this.sidebarWidth;
+      }
     }
   },
   computed: {
@@ -98,15 +133,30 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-.aside {
-  width: 200px !important;
-  overflow-y: auto;
+<style scoped>
+.sidebar {
+  /* width: 270px; */
+  height: 100%;
   overflow-x: hidden;
-  border: 1px solid #ddd;
+  transition: 0.4s;
 }
-.el-menu {
+.sidebar >>> .elmenu {
   border: 0 !important;
+  height: 100%;
+  position: relative;
+  overflow-x: hidden;
+}
+.sidebar >>> .collapse {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.sidebar >>> .el-menu-item {
+  text-align: left;
+}
+.sidebar >>> .el-submenu__title {
+  text-align: left;
 }
 </style>
 

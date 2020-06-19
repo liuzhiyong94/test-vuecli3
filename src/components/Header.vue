@@ -1,6 +1,6 @@
 <template>
   <el-header class="header">
-    <el-image class="logo" :src="src"></el-image>
+    <el-image class="logo" :src="src" @click="BackHome"></el-image>
     <el-dropdown class="userinfo">
       <span class="el-dropdown-link">
         {{realname}}
@@ -34,6 +34,9 @@ export default {
       sessionStorage.setItem("JwtToken", "");
       sessionStorage.setItem("UserInfo", "");
       location.reload();
+    },
+    BackHome() {
+      this.$router.push("/");
     }
   }
 };
@@ -47,6 +50,7 @@ export default {
     float: left;
     width: $header-height;
     height: $header-height;
+    cursor: pointer;
   }
 }
 .userinfo {
