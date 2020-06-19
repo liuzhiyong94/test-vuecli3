@@ -1,4 +1,4 @@
-# test-vuecli3
+# VueInit
 
 ## 安装依赖
 ```
