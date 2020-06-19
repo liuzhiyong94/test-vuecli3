@@ -1,29 +1,21 @@
 # test-vuecli3
 
-## Project setup
+## 安装依赖
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### 运行
 ```
 yarn run serve
 ```
 
-### Compiles and minifies for production
+### 编译
 ```
 yarn run build
 ```
 
-### Run your tests
+### 切换远程分支
 ```
-yarn run test
+git remote set-url origin url
 ```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
