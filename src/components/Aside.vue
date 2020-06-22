@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <el-menu router :collapse="isCollapse" class="elmenu">
+    <el-menu router :collapse="isCollapse" class="elmenu" :default-active="this.$route.path.substr(1)">
       <template v-for="item in filters">
         <template v-if="item.subs">
           <el-submenu :index="item.index" :key="item.index">
