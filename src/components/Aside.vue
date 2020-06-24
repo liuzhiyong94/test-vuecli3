@@ -158,5 +158,13 @@ export default {
 .sidebar >>> .el-submenu__title {
   text-align: left;
 }
+.sidebar >>> .el-menu-item{
+  height: 48px;
+  line-height: 48px;
+}
+.sidebar >>> .el-submenu__title{
+  height: 48px;
+  line-height: 48px;
+}
 </style>
 
